@@ -1,5 +1,6 @@
 <script>
-  import ScrollyVideo from '../../../../src/ScrollyVideo.svelte';
+  import ScrollyVideo from '$lib/ScrollyVideo.svelte';
+  import LoremSection from '$lib/LoremSection.svelte';
   import { base } from '$app/paths';
   import { onMount, onDestroy } from 'svelte';
   import Lenis from 'lenis';
@@ -78,6 +79,8 @@
   <meta name="description" content="Responsive scrollable videos without obscure video encoding requirements" />
 </svelte:head>
 
+<LoremSection title="Introduction" paragraphs={3} />
+
 <section class="scrollytelling-container" style="--scroll-height: {scrollHeight}">
   <!-- Conteneur pour ScrollyVideo avec hauteur de scroll -->
   <div class="video-scroll-container">
@@ -122,6 +125,8 @@
     {/each}
   </div>
 </section>
+
+<LoremSection title="Conclusion" paragraphs={3} />
 
 <style>
   :global(body) {
@@ -195,7 +200,7 @@
     z-index: 10;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     pointer-events: none;
   }
 
@@ -302,9 +307,7 @@
   /* Responsive */
   @media screen and (min-width: 769px) and (max-width: 1024px) {
     .foreground {
-      align-items: center;
-      padding-left: 0;
-      padding-right: 0;
+      align-items: stretch;
     }
 
     .step {
@@ -318,9 +321,7 @@
 
   @media screen and (max-width: 768px) {
     .foreground {
-      align-items: center;
-      padding-left: 0;
-      padding-right: 0;
+      align-items: stretch;
     }
 
     .step {
