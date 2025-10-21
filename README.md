@@ -6,12 +6,12 @@ A beautiful, performant scroll-driven video component for SvelteKit with smooth 
 
 - 🎬 **Scroll-driven video playback** - Video progress synced to scroll position
 - ⚡ **WebCodecs API** - Hardware-accelerated video decoding for buttery smooth performance
-- 🎯 **Lenis smooth scrolling** - Ultra-smooth, momentum-based scroll experience
 - 🎨 **Beautiful scrollytelling layout** - Dynamic steps with clean transitions
 - 📱 **Fully responsive** - Works perfectly on mobile, tablet, and desktop
 - 🚀 **Performance optimized** - CSS containment, GPU acceleration, efficient rendering
 - 🎛️ **Highly customizable** - Control transition speed, frame threshold, and more
 - 📏 **Dynamic spacing** - Configurable gaps between content steps
+- 🌐 **Cross-browser compatible** - Works reliably across all modern browsers
 
 ## 🚀 Quick Start
 
@@ -48,7 +48,7 @@ scrollyvideov2/
 │   │   ├── utils.js                     # Helper utilities
 │   │   └── LoremSection.svelte          # Example section component
 │   ├── routes/
-│   │   ├── +layout.svelte               # Global layout with Lenis scroll
+│   │   ├── +layout.svelte               # Global layout and styles
 │   │   ├── +layout.js                   # SvelteKit layout config
 │   │   └── +page.svelte                 # Demo page
 │   └── app.html                         # HTML template
@@ -110,7 +110,7 @@ See [VIDEO_ENCODING.md](./VIDEO_ENCODING.md) for detailed encoding instructions 
 - **CSS Containment** - Isolated rendering for better performance
 - **GPU Acceleration** - `will-change` hints for smooth compositing
 - **Smart Prop Diffing** - Only updates when props actually change
-- **Lenis Integration** - Smooth, performant scrolling library
+- **Native Scrolling** - Reliable cross-browser scroll performance
 - **Fixed Step Heights** - Consistent 100vh spacing for predictable scrolling
 
 ## 🎨 Customization
@@ -138,25 +138,10 @@ All styles are in `src/lib/ScrollytellingSection.svelte`. Key classes:
 - `.foreground` - Steps overlay container
 - `.video-scroll-container` - Video container
 
-### Smooth Scrolling
-
-Lenis configuration in `src/routes/+layout.svelte`:
-
-```javascript
-lenis = new Lenis({
-  duration: 1.2,              // Scroll duration
-  easing: (t) => ...,         // Easing function
-  smoothWheel: true,          // Smooth mouse wheel
-  wheelMultiplier: 1,         // Wheel sensitivity
-  touchMultiplier: 2,         // Touch sensitivity
-});
-```
-
 ## 🛠️ Tech Stack
 
 - **SvelteKit** - Full-stack framework
 - **Vite** - Build tool
-- **Lenis** - Smooth scrolling
 - **WebCodecs API** - Video decoding
 - **H.264** - Video codec
 

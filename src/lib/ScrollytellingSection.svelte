@@ -7,7 +7,7 @@
     "This is a scroll-driven video player that synchronizes video playback with your scroll position in real-time.",
     "As you scroll down, the video plays forward frame-by-frame; scroll up and it plays backward smoothly.",
     "Uses WebCodecs API for hardware-accelerated video decoding, delivering buttery smooth 60fps performance.",
-    "Lenis smooth scrolling library adds momentum-based physics for a natural, fluid scrolling experience.",
+    "Native browser scrolling ensures reliable cross-browser compatibility and smooth performance on all devices.",
     "The modular component architecture separates concerns: ScrollytellingSection handles layout, ScrollyVideo manages playback.",
     "Dynamic height calculation automatically measures content and adjusts the video container height for perfect synchronization.",
     "Each content step has natural auto-height with 100vh spacing ensuring smooth transitions between sections.",

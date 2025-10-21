@@ -139,20 +139,14 @@ class ScrollyVideo {
       const containerBoundingClientRect =
         this.container.parentNode.getBoundingClientRect();
 
-      // Use Lenis scroll value if available, otherwise fallback to native
-      // eslint-disable-next-line no-undef
-      const actualScrollY = window.__lenis?.scroll ?? window.pageYOffset;
-
       // Calculate the current scroll percent of the video
-      // When using Lenis, we need to calculate based on actual scroll position
-      const containerTop = containerBoundingClientRect.top + actualScrollY;
       const scrollPercent =
-        (actualScrollY - containerTop) /
+        -containerBoundingClientRect.top /
         // eslint-disable-next-line no-undef
         (containerBoundingClientRect.height - window.innerHeight);
 
       if (this.debug) {
-        console.info('ScrollyVideo scrolled to', scrollPercent, 'actualScrollY:', actualScrollY);
+        console.info('ScrollyVideo scrolled to', scrollPercent);
       }
 
       if (this.targetScrollPosition == null) {
@@ -557,12 +551,8 @@ class ScrollyVideo {
     const parent = this.container.parentNode;
     const { top, height } = parent.getBoundingClientRect();
 
-    // Use Lenis scroll value if available, otherwise fallback to native
     // eslint-disable-next-line no-undef
-    const actualScrollY = window.__lenis?.scroll ?? window.pageYOffset;
-
-    // eslint-disable-next-line no-undef
-    const startPoint = top + actualScrollY;
+    const startPoint = top + window.pageYOffset;
     // eslint-disable-next-line no-undef
     const containerHeightInViewport = height - window.innerHeight;
     const targetPosition = startPoint + containerHeightInViewport * percentage;
@@ -570,15 +560,8 @@ class ScrollyVideo {
     if (isScrollPositionAtTarget(targetPosition)) {
       this.targetScrollPosition = null;
     } else {
-      // Use Lenis scrollTo if available, otherwise fallback to native
       // eslint-disable-next-line no-undef
-      if (window.__lenis) {
-        // eslint-disable-next-line no-undef
-        window.__lenis.scrollTo(targetPosition, { duration: 1.2 });
-      } else {
-        // eslint-disable-next-line no-undef
-        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-      }
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
       this.targetScrollPosition = targetPosition;
     }
   }
