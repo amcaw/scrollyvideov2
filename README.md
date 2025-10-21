@@ -41,19 +41,21 @@ npm run build
 scrollyvideov2/
 ├── src/
 │   ├── lib/
-│   │   ├── ScrollyVideo.svelte    # Main video component
-│   │   ├── ScrollyVideo.js         # Core video controller
-│   │   ├── videoDecoder.js         # WebCodecs implementation
-│   │   ├── utils.js                # Helper utilities
-│   │   └── LoremSection.svelte     # Example section component
+│   │   ├── ScrollytellingSection.svelte # Complete scrollytelling component
+│   │   ├── ScrollyVideo.svelte          # Video playback component
+│   │   ├── ScrollyVideo.js              # Core video controller
+│   │   ├── videoDecoder.js              # WebCodecs implementation
+│   │   ├── utils.js                     # Helper utilities
+│   │   └── LoremSection.svelte          # Example section component
 │   ├── routes/
-│   │   ├── +layout.js              # SvelteKit layout config
-│   │   └── +page.svelte            # Demo page with scrollytelling
-│   └── app.html                    # HTML template
+│   │   ├── +layout.svelte               # Global layout with Lenis scroll
+│   │   ├── +layout.js                   # SvelteKit layout config
+│   │   └── +page.svelte                 # Demo page
+│   └── app.html                         # HTML template
 ├── static/
-│   ├── output.mp4                  # Demo video file
-│   └── poster.jpg                  # Video poster image
-├── VIDEO_ENCODING.md               # Video encoding guide
+│   ├── output.mp4                       # Demo video file
+│   └── poster.jpg                       # Video poster image
+├── VIDEO_ENCODING.md                    # Video encoding guide
 └── package.json
 ```
 
@@ -115,14 +117,12 @@ See [VIDEO_ENCODING.md](./VIDEO_ENCODING.md) for detailed encoding instructions 
 
 ### Dynamic Steps
 
-The demo includes 8 customizable content steps. Modify the `steps` array in `src/routes/+page.svelte`:
+The demo includes 8 customizable content steps. Modify the `steps` array in `src/lib/ScrollytellingSection.svelte`:
 
 ```svelte
-const steps = [
-  {
-    title: "Your Title",
-    text: "Your description"
-  },
+export let steps = [
+  "Your first step description",
+  "Your second step description",
   // Add more steps...
 ];
 ```
@@ -131,15 +131,16 @@ The scroll height automatically adjusts based on the number of steps.
 
 ### Styling
 
-All styles are in `src/routes/+page.svelte`. Key classes:
-- `.step` - Individual content step container
+All styles are in `src/lib/ScrollytellingSection.svelte`. Key classes:
+- `.step` - Individual step container
 - `.step-content` - Content box styling
+- `.step-text` - Text styling
 - `.foreground` - Steps overlay container
 - `.video-scroll-container` - Video container
 
 ### Smooth Scrolling
 
-Lenis configuration in `src/routes/+page.svelte`:
+Lenis configuration in `src/routes/+layout.svelte`:
 
 ```javascript
 lenis = new Lenis({
@@ -189,6 +190,8 @@ Fallback to standard video decoding on unsupported browsers.
 MIT
 
 ## 🙏 Credits
+
+Inspired by [scrolly-video](https://github.com/dkaoster/scrolly-video) by [@dkaoster](https://github.com/dkaoster)
 
 Built with [Claude Code](https://claude.com/claude-code)
 
