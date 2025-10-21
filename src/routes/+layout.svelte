@@ -68,7 +68,8 @@
     pointer-events: none;
   }
 
-  * {
+  :global(*) {
     box-sizing: border-box;
+    outline: 1px solid red;
   }
 </style>
