@@ -13,8 +13,9 @@
       orientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
-      syncTouch: true,
+      touchMultiplier: 1,
+      syncTouch: false,
+      touchInertiaMultiplier: 15,
     });
 
     // Expose Lenis to window for ScrollyVideo to use
