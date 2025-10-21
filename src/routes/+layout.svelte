@@ -14,7 +14,11 @@
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
+      syncTouch: true,
     });
+
+    // Expose Lenis to window for ScrollyVideo to use
+    window.__lenis = lenis;
 
     // Animation frame loop
     function raf(time) {
@@ -27,6 +31,7 @@
   onDestroy(() => {
     if (lenis) {
       lenis.destroy();
+      window.__lenis = null;
     }
   });
 </script>

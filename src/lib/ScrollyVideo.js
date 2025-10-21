@@ -108,10 +108,15 @@ class ScrollyVideo {
     if (cover) this.setCoverStyle(this.video);
 
     // Detect webkit (safari), because webkit requires special attention
-    const browserEngine = new UAParser().getEngine();
+    const parser = new UAParser();
+    const browserEngine = parser.getEngine();
+    const browser = parser.getBrowser();
     // eslint-disable-next-line no-undef
     this.isSafari = browserEngine.name === 'WebKit';
+    // Detect Chrome iOS specifically (has different scroll behavior than Safari)
+    this.isChromeIOS = browser.name === 'Chrome' && /iPhone|iPad|iPod/.test(navigator.userAgent);
     if (debug && this.isSafari) console.info('Safari browser detected');
+    if (debug && this.isChromeIOS) console.info('Chrome iOS detected');
 
     // Initialize state variables
     this.currentTime = 0; // Saves the currentTime of the video, synced with this.video.currentTime
@@ -134,14 +139,20 @@ class ScrollyVideo {
       const containerBoundingClientRect =
         this.container.parentNode.getBoundingClientRect();
 
+      // Use Lenis scroll value if available, otherwise fallback to native
+      // eslint-disable-next-line no-undef
+      const actualScrollY = window.__lenis?.scroll ?? window.pageYOffset;
+
       // Calculate the current scroll percent of the video
+      // When using Lenis, we need to calculate based on actual scroll position
+      const containerTop = containerBoundingClientRect.top + actualScrollY;
       const scrollPercent =
-        -containerBoundingClientRect.top /
+        (actualScrollY - containerTop) /
         // eslint-disable-next-line no-undef
         (containerBoundingClientRect.height - window.innerHeight);
 
       if (this.debug) {
-        console.info('ScrollyVideo scrolled to', scrollPercent);
+        console.info('ScrollyVideo scrolled to', scrollPercent, 'actualScrollY:', actualScrollY);
       }
 
       if (this.targetScrollPosition == null) {
@@ -546,8 +557,12 @@ class ScrollyVideo {
     const parent = this.container.parentNode;
     const { top, height } = parent.getBoundingClientRect();
 
+    // Use Lenis scroll value if available, otherwise fallback to native
     // eslint-disable-next-line no-undef
-    const startPoint = top + window.pageYOffset;
+    const actualScrollY = window.__lenis?.scroll ?? window.pageYOffset;
+
+    // eslint-disable-next-line no-undef
+    const startPoint = top + actualScrollY;
     // eslint-disable-next-line no-undef
     const containerHeightInViewport = height - window.innerHeight;
     const targetPosition = startPoint + containerHeightInViewport * percentage;
@@ -555,8 +570,15 @@ class ScrollyVideo {
     if (isScrollPositionAtTarget(targetPosition)) {
       this.targetScrollPosition = null;
     } else {
+      // Use Lenis scrollTo if available, otherwise fallback to native
       // eslint-disable-next-line no-undef
-      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      if (window.__lenis) {
+        // eslint-disable-next-line no-undef
+        window.__lenis.scrollTo(targetPosition, { duration: 1.2 });
+      } else {
+        // eslint-disable-next-line no-undef
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }
       this.targetScrollPosition = targetPosition;
     }
   }
