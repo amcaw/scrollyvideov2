@@ -71,6 +71,14 @@
     will-change: transform;
   }
 
+  .video-scroll-container :global([data-scrolly-container]) {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
   .overlay {
     position: fixed;
     top: 0;
